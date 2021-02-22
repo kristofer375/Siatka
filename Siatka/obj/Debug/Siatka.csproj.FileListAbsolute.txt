@@ -1,0 +1,15 @@
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\bin\Debug\Siatka.exe.config
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\bin\Debug\Siatka.exe
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\bin\Debug\Siatka.pdb
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\Siatka.csprojAssemblyReference.cache
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\MainWindow.g.cs
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\App.g.cs
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\Siatka_MarkupCompile.cache
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\Siatka_MarkupCompile.lref
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\MainWindow.baml
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\Siatka.g.resources
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\Siatka.Properties.Resources.resources
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\Siatka.csproj.GenerateResource.cache
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\Siatka.csproj.CoreCompileInputs.cache
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\Siatka.exe
+C:\Users\Krzysztof\source\repos\Siatka\Siatka\obj\Debug\Siatka.pdb
