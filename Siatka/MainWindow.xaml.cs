@@ -23,7 +23,7 @@ namespace Siatka
     {
         DispatcherTimer gameTimer = new DispatcherTimer();
         Random random = new Random();
-        int x = 0;
+        int x = 3;
         int lol = 0;
         bool isStart;
         List<Rectangle> klocki = new List<Rectangle>();
@@ -34,17 +34,6 @@ namespace Siatka
             gameTimer.Tick += GameTimer_Tick;
             gameTimer.Interval = TimeSpan.FromSeconds(1);
             gameTimer.Start();
-        }
-        private void KeyIsDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Left)
-            {
-                Grid.SetColumn(klocki[counter], 1);
-            }
-            else if (e.Key == Key.Right)
-            {
-                Grid.SetColumn(klocki[counter], 0);
-            }
         }
         private void GameTimer_Tick(object sender, EventArgs e)
         {
@@ -61,18 +50,6 @@ namespace Siatka
             }
         }
 
-        public class Board
-        {
-            private int rows;
-            private int cols;
-            private int score;
-            private Label[,] BlockContols;
-            public Board(Grid TetrisGrid)
-            {
-                rows = TetrisGrid.RowDefinitions.Count;
-                cols = TetrisGrid.ColumnDefinitions.Count;
-            }
-        }
 
 
         private void OnClick(object sender, RoutedEventArgs e)
