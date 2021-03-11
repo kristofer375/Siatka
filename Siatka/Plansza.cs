@@ -70,7 +70,7 @@ namespace Siatka
             Brush kolor = tetromino.wezKolor();
             foreach (Point p in ksztalt)
             {
-                kontrolne[(int)(p.X + pozycja.X) + ((kolumny / 2) - 1), (int)(p.Y + pozycja.Y) + 2].Background = kolor;
+                kontrolne[(int)(p.X + pozycja.X) + ((kolumny / 2) - 1), (int)(p.Y + pozycja.Y) + 1].Background = kolor;
             }
         }
         //usuwa kolor z kafelków na obecnie aktywnego tetromino
@@ -81,7 +81,7 @@ namespace Siatka
             Brush kolor = tetromino.wezKolor();
             foreach (Point p in ksztalt)
             {
-                kontrolne[(int)(p.X + pozycja.X) + ((kolumny / 2) - 1), (int)(p.Y + pozycja.Y) + 2].Background = brak;
+                kontrolne[(int)(p.X + pozycja.X) + ((kolumny / 2) - 1), (int)(p.Y + pozycja.Y) + 1].Background = brak;
             }
         }
         //sprawdza, czy wszystkie kafelki w wierszu mają przypisany inny kolor niż domyślny; przypisanie punktów
@@ -131,7 +131,7 @@ namespace Siatka
                 {
                     ruch = false;
                 }
-                else if (kontrolne[((int)(p.X + pozycja.X) + (kolumny / 2)), (int)(p.Y + pozycja.Y) + 2].Background != brak)
+                else if (kontrolne[((int)(p.X + pozycja.X) + (kolumny / 2)), (int)(p.Y + pozycja.Y) + 1].Background != brak)
                 {
                     ruch = false;
                 }
@@ -158,7 +158,7 @@ namespace Siatka
                 {
                     ruch = false;
                 }
-                else if (kontrolne[((int)(p.X + pozycja.X) + ((kolumny / 2) - 1) - 1), (int)(p.Y + pozycja.Y) + 2].Background != brak)
+                else if (kontrolne[((int)(p.X + pozycja.X) + (kolumny / 2) - 2), (int)(p.Y + pozycja.Y) + 1].Background != brak)
                 {
                     ruch = false;
                 }
@@ -181,11 +181,11 @@ namespace Siatka
             UsunTetromino();
             foreach (Point p in ksztalt)
             {
-                if (((int)(p.Y + pozycja.Y) + 3) >= wiersze)
+                if (((int)(p.Y + pozycja.Y) + 2) >= wiersze)
                 {
                     ruch = false;
                 }
-                else if (kontrolne[((int)(p.X + pozycja.X) + ((kolumny / 2) - 1)), (int)(p.Y + pozycja.Y) + 3].Background != brak)
+                else if (kontrolne[((int)(p.X + pozycja.X) + ((kolumny / 2) - 1)), (int)(p.Y + pozycja.Y) + 2].Background != brak)
                 {
                     ruch = false;
                 }
@@ -225,11 +225,15 @@ namespace Siatka
                 {
                     ruch = false;
                 }
+                else if (((int)(pom[i].X + pozycja.X) + ((kolumny / 2) - 1)) >= kolumny)
+                {
+                    ruch = false;
+                }
                 else if (((int)(pom[i].X + pozycja.X) + ((kolumny / 2) - 1)) >= wiersze)
                 {
                     ruch = false;
                 }
-                else if (kontrolne[((int)(pom[i].X + pozycja.X) + ((kolumny / 2) -1)), (int)(pom[i].Y + pozycja.Y) + 2].Background != brak)
+                else if (kontrolne[((int)(pom[i].X + pozycja.X) + ((kolumny / 2) -1)), (int)(pom[i].Y + pozycja.Y) + 2].Background != brak)//obrót przy prawym boku(?)
                 {
                     ruch = false;
                 }
