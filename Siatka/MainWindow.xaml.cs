@@ -22,99 +22,56 @@ namespace Siatka
     public partial class MainWindow : Window
     {
         DispatcherTimer gameTimer = new DispatcherTimer();
-        Random random = new Random();
-        int x = 3;
-        int lol = 0;
-        bool isStart;
-        List<Rectangle> klocki = new List<Rectangle>();
-        int counter = 0;
+        Plansza plansza;
         public MainWindow()
         {
             InitializeComponent();
-            gameTimer.Tick += GameTimer_Tick;
-            gameTimer.Interval = TimeSpan.FromSeconds(1);
-            gameTimer.Start();
+            gameTimer.Tick += new EventHandler(GameTimer_Tick);
+            gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 400);
+            Start();
         }
+
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             //throw new NotImplementedException();
-            if (isStart && lol < 16)
+            punkty.Content = plansza.wezPunkty().ToString("0000000000");
+            wypelnienia.Content = plansza.wezWypelnienia().ToString("0000000000");
+            plansza.TetrominoDol();
+            if (plansza.czyPorazka())
             {
-                Grid.SetRow(klocki[counter], lol++);
-            }
-            else if (isStart)
-            {
-                lol = 0;
-                counter++;
-                isStart = false;
+                gameTimer.Stop();
             }
         }
-
-
-
-        private void OnClick(object sender, RoutedEventArgs e)
+        private void Start()
         {
-            //if (counter > 0)
-            //    W_Dół(0);
-            klocki.Add(new Rectangle());
-            grid1.Children.Add(klocki[counter]);
-            Grid.SetColumn(klocki[counter], x/*random.Next(0, 6)*/);
-            Grid.SetColumnSpan(klocki[counter], 3);
-            switch (Siatka.SelectedIndex)
-            {
-                case 1:
-                    klocki[counter].Fill = Brushes.Blue;
-                    break;
-                case 2:
-                    klocki[counter].Fill = Brushes.Green;
-                    break;
-                case 3:
-                    klocki[counter].Fill = Brushes.Yellow;
-                    break;
-                case 4:
-                    klocki[counter].Fill = Brushes.Purple;
-                    break;
-                case 5:
-                    klocki[counter].Fill = Brushes.Brown;
-                    break;
-                default:
-                    klocki[counter].Fill = Brushes.Red;
-                    break;
-            }
-            border.BorderBrush = Brushes.Black;
-            isStart = true;
+            grid1.Children.Clear();
+            plansza = new Plansza(grid1);
+            gameTimer.Start();
         }
-        public void W_Dół(int plus)
+        private void HandleKeyDown(object sender, KeyEventArgs e)
         {
-            while (plus < 16)
+            if (e.Key == Key.Left && gameTimer.IsEnabled)
             {
-                //Thread.Sleep(1000);
-                Grid.SetRow(klocki[0], plus++);
+                plansza.TetrominoLewo();
             }
-        }
-        public void W_Dół(int counter, int plus)
-        {
-            if (counter < 16)
+            else if (e.Key == Key.Right && gameTimer.IsEnabled)
             {
-                if (counter - 1 > 0)
-                    W_Dół(counter - 1, plus + 1);
-                Grid.SetRow(klocki[counter - 1], plus + 1);
+                plansza.TetrominoPrawo();
             }
-        }
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Window1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Left && x > 0)
+            else if (e.Key == Key.Up && gameTimer.IsEnabled)
             {
-                Grid.SetColumn(klocki[counter], --x);
+                plansza.TetrominoObrot();
             }
-            else if (e.Key == Key.Right && x < 6)
+            else if (e.Key == Key.Down && gameTimer.IsEnabled)
             {
-                Grid.SetColumn(klocki[counter], ++x);
+                plansza.TetrominoDol();
+            }
+            else if (e.Key == Key.F1)
+            {
+                gameTimer.Stop();
+                grid1.Children.Clear();
+                plansza = new Plansza(grid1);
+                gameTimer.Start();
             }
         }
     }
