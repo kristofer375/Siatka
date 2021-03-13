@@ -34,10 +34,10 @@ namespace Siatka
         private void GameTimer_Tick(object sender, EventArgs e)
         {
             //throw new NotImplementedException();
-            punkty.Content = plansza.wezPunkty().ToString("0000000000");
-            wypelnienia.Content = plansza.wezWypelnienia().ToString("0000000000");
+            punkty.Content = plansza.WezPunkty().ToString("0000000000");
+            wypelnienia.Content = plansza.WezWypelnienia().ToString("0000000000");
             plansza.TetrominoDol();
-            if (plansza.czyPorazka())
+            if (plansza.CzyPorazka())
             {
                 gameTimer.Stop();
             }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Siatka"
         mc:Ignorable="d"
-        Title="MainWindow" Height="597.73" Width="321.15" KeyDown="HandleKeyDown">
+        Title="Tetris" Height="600" Width="320" KeyDown="HandleKeyDown" MinWidth="320" MinHeight="600">
     <Grid Margin="30,28,76,363" Width="60" Height="20">
         <Grid x:Name="grid1" Width="160" Margin="-38,62,-85,-362" Height="320">
             <Grid.RowDefinitions>

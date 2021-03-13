@@ -50,15 +50,15 @@ namespace Siatka
             kolejneTetromino = new Tetromino();
             UmiescTetromino();
         }
-        public bool czyPorazka()
+        public bool CzyPorazka()
         {
             return czyPrzegrana;
         }
-        public int wezPunkty()
+        public int WezPunkty()
         {
             return punkty;
         }
-        public int wezWypelnienia()
+        public int WezWypelnienia()
         {
             return wypelnienia;
         }
@@ -248,7 +248,7 @@ namespace Siatka
                 UmiescTetromino();
             }
         }
-        public bool Przegrana()
+        private bool Przegrana()
         {
             Point pozycja = tetromino.wezPolozenie();
             Point[] ksztalt = tetromino.wezKsztalt();
