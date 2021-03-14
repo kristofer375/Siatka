@@ -22,16 +22,27 @@ namespace Siatka
         private Label[,] kontrolne;
         private Brush brak = Brushes.Transparent;
         private Brush szary = Brushes.Gray;
+        private Thickness siatka = new Thickness(1, 1, 1, 1);
         //przypisanie wartości z istniejącego grida
         public Plansza(Grid grid)
         {
-            kolumny = grid.ColumnDefinitions.Count;
-            wiersze = grid.RowDefinitions.Count;
+            kolumny = /*grid.ColumnDefinitions.Count*/10;
+            wiersze = /*grid.RowDefinitions.Count*/20;
             punkty = 0;
             wypelnienia = 0;
-            kontrolne = new Label[kolumny, wiersze];
+            kontrolne = new Label[16, 20];
             czyPrzegrana = false;
             //wypełnienie grida siatką
+            grid = Siatka(grid);
+            //stworzenie pierwszego i drugiego tetromino; umieszczenie pierwszego tetromino na planszy
+            tetromino = new Tetromino();
+            kolejneTetromino = new Tetromino();
+            UmiescTetromino();
+            UmiescNastepne();
+        }
+        private Grid Siatka(Grid grid)
+        {
+            grid.Children.Clear();
             for (int i = 0; i < kolumny; i++)
             {
                 for (int j = 0; j < wiersze; j++)
@@ -39,16 +50,58 @@ namespace Siatka
                     kontrolne[i, j] = new Label();
                     kontrolne[i, j].Background = brak;
                     kontrolne[i, j].BorderBrush = szary;
-                    kontrolne[i, j].BorderThickness = new System.Windows.Thickness(1, 1, 1, 1);
+                    kontrolne[i, j].BorderThickness = siatka;
                     Grid.SetRow(kontrolne[i, j], j);
                     Grid.SetColumn(kontrolne[i, j], i);
                     grid.Children.Add(kontrolne[i, j]);
                 }
             }
-            //stworzenie pierwszego i drugiego tetromino; umieszczenie pierwszego tetromino na planszy
-            tetromino = new Tetromino();
-            kolejneTetromino = new Tetromino();
-            UmiescTetromino();
+            Label obramówka = new Label();
+            obramówka.Background = brak;
+            obramówka.BorderBrush = Brushes.Black;
+            obramówka.BorderThickness = new Thickness(2, 2, 2, 2);
+            Grid.SetRow(obramówka, 0);
+            Grid.SetColumn(obramówka, 0);
+            Grid.SetColumnSpan(obramówka, 10);
+            Grid.SetRowSpan(obramówka, 20);
+            grid.Children.Add(obramówka);
+            /**/
+            for (int i = kolumny + 2; i < 16; i++)
+            {
+                for (int j = 8; j < 12; j++)
+                {
+                    kontrolne[i, j] = new Label();
+                    kontrolne[i, j].Background = brak;
+                    kontrolne[i, j].BorderBrush = szary;
+                    kontrolne[i, j].BorderThickness = siatka;
+                    Grid.SetRow(kontrolne[i, j], j);
+                    Grid.SetColumn(kontrolne[i, j], i);
+                    grid.Children.Add(kontrolne[i, j]);
+                }
+            }
+            Label nast = new Label();
+            nast.Background = brak;
+            nast.BorderBrush = Brushes.Black;
+            nast.BorderThickness = new Thickness(2, 2, 2, 2);
+            Grid.SetRow(nast, 8);
+            Grid.SetColumn(nast, 12);
+            Grid.SetColumnSpan(nast, 4);
+            Grid.SetRowSpan(nast, 4);
+            grid.Children.Add(nast);
+            return grid;
+        }
+        public void PrzelaczSiatka(int a, Grid grid)
+        {
+            if (a == 1)
+            {
+                siatka = new Thickness(1, 1, 1, 1);
+                Siatka(grid);
+            }
+            else
+            {
+                siatka = new Thickness(0, 0, 0, 0);
+                Siatka(grid);
+            }
         }
         public bool CzyPorazka()
         {
@@ -63,6 +116,26 @@ namespace Siatka
             return wypelnienia;
         }
         //zmienia kolor kafelków na kolor aktywnego tetromino
+        private void UmiescNastepne()
+        {
+            Point pozycja = tetromino.wezPolozenie();
+            Point[] ksztalt = kolejneTetromino.wezKsztalt();
+            Brush kolor = kolejneTetromino.wezKolor();
+            foreach (Point p in ksztalt)
+            {
+                kontrolne[(int)(p.X) + (/*(kolumny / 2)*/14 - 1), (int)(p.Y) + 10].Background = kolor;
+            }
+        }
+        private void UsunNastepne()
+        {
+            Point pozycja = tetromino.wezPolozenie();
+            Point[] ksztalt = tetromino.wezKsztalt();
+            Brush kolor = tetromino.wezKolor();
+            foreach (Point p in ksztalt)
+            {
+                kontrolne[(int)(p.X + pozycja.X) + (/*(kolumny / 2)*/14 - 1), (int)(p.Y + pozycja.Y) + 10].Background = brak;
+            }
+        }
         private void UmiescTetromino()
         {
             Point pozycja = tetromino.wezPolozenie();
@@ -70,7 +143,7 @@ namespace Siatka
             Brush kolor = tetromino.wezKolor();
             foreach (Point p in ksztalt)
             {
-                kontrolne[(int)(p.X + pozycja.X) + ((kolumny / 2) - 1), (int)(p.Y + pozycja.Y) + 1].Background = kolor;
+                kontrolne[(int)(p.X + pozycja.X) + (/*(kolumny / 2)*/5 - 1), (int)(p.Y + pozycja.Y) + 1].Background = kolor;
             }
         }
         //usuwa kolor z kafelków na obecnie aktywnego tetromino
@@ -81,13 +154,13 @@ namespace Siatka
             Brush kolor = tetromino.wezKolor();
             foreach (Point p in ksztalt)
             {
-                kontrolne[(int)(p.X + pozycja.X) + ((kolumny / 2) - 1), (int)(p.Y + pozycja.Y) + 1].Background = brak;
+                kontrolne[(int)(p.X + pozycja.X) + (/*(kolumny / 2)*/5 - 1), (int)(p.Y + pozycja.Y) + 1].Background = brak;
             }
         }
         //sprawdza, czy wszystkie kafelki w wierszu mają przypisany inny kolor niż domyślny; przypisanie punktów
         private void SprawdzWiersze()
         {
-            bool zapelnione = false;
+            bool zapelnione;
             for (int i = wiersze - 1; i > 0; i--)
             {
                 zapelnione = true;
@@ -127,11 +200,11 @@ namespace Siatka
             UsunTetromino();
             foreach (Point p in ksztalt)
             {
-                if (((int)(p.X + pozycja.X) + (kolumny / 2)) >= kolumny)
+                if (((int)(p.X + pozycja.X) + /*(kolumny / 2)*/5) >= kolumny)
                 {
                     ruch = false;
                 }
-                else if (kontrolne[((int)(p.X + pozycja.X) + (kolumny / 2)), (int)(p.Y + pozycja.Y) + 1].Background != brak)
+                else if (kontrolne[((int)(p.X + pozycja.X) + /*(kolumny / 2)*/5), (int)(p.Y + pozycja.Y) + 1].Background != brak)
                 {
                     ruch = false;
                 }
@@ -154,11 +227,11 @@ namespace Siatka
             UsunTetromino();
             foreach (Point p in ksztalt)
             {
-                if (((int)(p.X + pozycja.X) + (kolumny / 2) - 2) < 0)
+                if (((int)(p.X + pozycja.X) + /*(kolumny / 2)*/5 - 2) < 0)
                 {
                     ruch = false;
                 }
-                else if (kontrolne[((int)(p.X + pozycja.X) + (kolumny / 2) - 2), (int)(p.Y + pozycja.Y) + 1].Background != brak)
+                else if (kontrolne[((int)(p.X + pozycja.X) + /*(kolumny / 2)*/5 - 2), (int)(p.Y + pozycja.Y) + 1].Background != brak)
                 {
                     ruch = false;
                 }
@@ -185,7 +258,7 @@ namespace Siatka
                 {
                     ruch = false;
                 }
-                else if (kontrolne[((int)(p.X + pozycja.X) + ((kolumny / 2) - 1)), (int)(p.Y + pozycja.Y) + 2].Background != brak)
+                else if (kontrolne[((int)(p.X + pozycja.X) + (/*(kolumny / 2)*/5 - 1)), (int)(p.Y + pozycja.Y) + 2].Background != brak)
                 {
                     ruch = false;
                 }
@@ -197,12 +270,15 @@ namespace Siatka
             }
             else
             {
+                tetromino.UstawKolor();
                 UmiescTetromino();
                 SprawdzWiersze();
                 tetromino = kolejneTetromino;
                 czyPrzegrana = Przegrana();
+                UsunNastepne();
                 kolejneTetromino = new Tetromino();
             }
+            UmiescNastepne();
         }
         public void TetrominoObrot()
         {
@@ -221,19 +297,19 @@ namespace Siatka
                 {
                     ruch = false;
                 }
-                else if (((int)(pom[i].X + pozycja.X) + ((kolumny / 2) - 1)) < 0)
+                else if (((int)(pom[i].X + pozycja.X) + (/*(kolumny / 2)*/5 - 1)) < 0)
                 {
                     ruch = false;
                 }
-                else if (((int)(pom[i].X + pozycja.X) + ((kolumny / 2) - 1)) >= kolumny)
+                else if (((int)(pom[i].X + pozycja.X) + (/*(kolumny / 2)*/5 - 1)) >= kolumny)
                 {
                     ruch = false;
                 }
-                else if (((int)(pom[i].X + pozycja.X) + ((kolumny / 2) - 1)) >= wiersze)
+                else if (((int)(pom[i].X + pozycja.X) + (/*(kolumny / 2)*/5 - 1)) >= wiersze)
                 {
                     ruch = false;
                 }
-                else if (kontrolne[((int)(pom[i].X + pozycja.X) + ((kolumny / 2) -1)), (int)(pom[i].Y + pozycja.Y) + 2].Background != brak)//obrót przy prawym boku(?)
+                else if (kontrolne[((int)(pom[i].X + pozycja.X) + (/*(kolumny / 2)*/5 - 1)), (int)(pom[i].Y + pozycja.Y) + 2].Background != brak)//obrót przy prawym boku(?)
                 {
                     ruch = false;
                 }
@@ -254,7 +330,7 @@ namespace Siatka
             Point[] ksztalt = tetromino.wezKsztalt();
             foreach (Point p in ksztalt)
             {
-                if (kontrolne[(int)(p.X + pozycja.X) + ((kolumny / 2) - 1), (int)(p.Y + pozycja.Y) + 2].Background != brak)
+                if (kontrolne[(int)(p.X + pozycja.X) + (/*(kolumny / 2)*/5 - 1), (int)(p.Y + pozycja.Y) + 2].Background != brak)
                 {
                     return true;
                 }

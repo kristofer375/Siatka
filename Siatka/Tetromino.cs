@@ -25,6 +25,10 @@ namespace Siatka
         {
             return polozenie;
         }
+        public void UstawKolor()
+        {
+             kolor = Brushes.Green;
+        }
         public Brush wezKolor()
         {
             return kolor;
@@ -58,7 +62,7 @@ namespace Siatka
                     return new Point[] { new Point(-1, 0), new Point(0, 0), new Point(1, 0), new Point(2, 0) }; //I
                 case 6:
                     czyObrot = false;
-                    return new Point[] { new Point(0, 0), new Point(1, 0), new Point(0, 1), new Point(1, 1) }; //O
+                    return new Point[] { new Point(0, 0), new Point(1, 0), new Point(0, -1), new Point(1, -1) }; //O
                 default:
                     return null;
             }
@@ -66,7 +70,7 @@ namespace Siatka
         private Brush LosowyKolor()
         {
             Random random = new Random();
-            switch (random.Next(0, 6))
+            switch (random.Next(0, /*6*/1))
             {
                 case 0:
                     return Brushes.Red;

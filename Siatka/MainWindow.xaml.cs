@@ -73,6 +73,31 @@ namespace Siatka
                 plansza = new Plansza(grid1);
                 gameTimer.Start();
             }
+            else if (e.Key == Key.F2)
+            {
+                if (gameTimer.IsEnabled)
+                {
+                    gameTimer.Stop();
+                }
+                else
+                {
+                    gameTimer.Start();
+                }
+            }
+            else if (e.Key == Key.F3)
+            {
+                gameTimer.Stop();
+                grid1.Children.Clear();
+                plansza = new Plansza(grid1);
+                plansza.PrzelaczSiatka(1, grid1);
+            }
+            else if (e.Key == Key.F4)
+            {
+                gameTimer.Stop();
+                grid1.Children.Clear();
+                plansza = new Plansza(grid1);
+                plansza.PrzelaczSiatka(0, grid1);
+            }
         }
     }
 }

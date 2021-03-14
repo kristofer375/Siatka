@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Siatka"
         mc:Ignorable="d"
         Title="Tetris" Height="600" Width="320" KeyDown="HandleKeyDown" MinWidth="320" MinHeight="600">
-    <Grid Margin="30,28,76,363" Width="60" Height="20">
-        <Grid x:Name="grid1" Width="160" Margin="-38,62,-85,-362" Height="320">
+    <Grid Width="310" Height="568" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Grid x:Name="grid1" Width="256" Margin="30,144,24,104" Height="320">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -41,9 +41,15 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Label x:Name="punkty" Content="Label" HorizontalAlignment="Left" Margin="-74,-71,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="wypelnienia" Content="Label" HorizontalAlignment="Right" Margin="0,-71,-130,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="punkty" Content="Label" HorizontalAlignment="Left" Margin="30,70,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="wypelnienia" Content="Label" HorizontalAlignment="Right" Margin="0,70,30,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
