@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Plansza.cs" />
     <Compile Include="Tetromino.cs" />
+    <Compile Include="Txt.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

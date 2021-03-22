@@ -29,6 +29,8 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -51,5 +53,16 @@
         </Grid>
         <Label x:Name="punkty" Content="Label" HorizontalAlignment="Left" Margin="30,70,0,0" VerticalAlignment="Top"/>
         <Label x:Name="wypelnienia" Content="Label" HorizontalAlignment="Right" Margin="0,70,30,0" VerticalAlignment="Top"/>
+        <Menu HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="310">
+            <MenuItem Header="Gra">
+                <MenuItem Header="Nowa Gra" InputGestureText="F1" Click="MenuItem_Click" />
+                <MenuItem Header="Pauza/Wznów" InputGestureText="F2" Click="MenuItem_Click_1" />
+                <Separator/>
+            </MenuItem>
+            <MenuItem Header="Widok">
+                <MenuItem Header="Widoczna siatka" InputGestureText="F3" Click="MenuItem_Click_2" />
+                <MenuItem Header="Widoczna siatka" InputGestureText="F4" Click="MenuItem_Click_3"  />
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

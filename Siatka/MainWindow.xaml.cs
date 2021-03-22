@@ -23,12 +23,17 @@ namespace Siatka
     {
         DispatcherTimer gameTimer = new DispatcherTimer();
         Plansza plansza;
+        Txt txt = new Txt();
         public MainWindow()
         {
             InitializeComponent();
             gameTimer.Tick += new EventHandler(GameTimer_Tick);
             gameTimer.Interval = new TimeSpan(0, 0, 0, 0, 400);
-            Start();
+
+            txt.Odczyt();
+
+            plansza = new Plansza(grid1);
+            //Start();
         }
 
         private void GameTimer_Tick(object sender, EventArgs e)
@@ -40,6 +45,8 @@ namespace Siatka
             if (plansza.CzyPorazka())
             {
                 gameTimer.Stop();
+                txt.Dodaj(wypelnienia.Content.ToString());
+                txt.Zapisz();
             }
         }
         private void Start()
@@ -68,10 +75,7 @@ namespace Siatka
             }
             else if (e.Key == Key.F1)
             {
-                gameTimer.Stop();
-                grid1.Children.Clear();
-                plansza = new Plansza(grid1);
-                gameTimer.Start();
+                Start();
             }
             else if (e.Key == Key.F2)
             {
@@ -86,18 +90,39 @@ namespace Siatka
             }
             else if (e.Key == Key.F3)
             {
-                gameTimer.Stop();
-                grid1.Children.Clear();
-                plansza = new Plansza(grid1);
-                plansza.PrzelaczSiatka(1, grid1);
+                plansza.Siatka(grid1, true);
             }
             else if (e.Key == Key.F4)
             {
-                gameTimer.Stop();
-                grid1.Children.Clear();
-                plansza = new Plansza(grid1);
-                plansza.PrzelaczSiatka(0, grid1);
+                plansza.Siatka(grid1, false);
             }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Start();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (gameTimer.IsEnabled)
+            {
+                gameTimer.Stop();
+            }
+            else
+            {
+                gameTimer.Start();
+            }
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            plansza.Siatka(grid1, true);
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            plansza.Siatka(grid1, false);
         }
     }
 }
